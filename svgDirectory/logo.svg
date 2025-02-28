@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100" width="200" height="100">
+  <!-- Card 1 (Flipped) -->
+  <rect x="10" y="25" width="60" height="90" rx="10" ry="10" fill="#2196F3"/>
+  <text x="40" y="75" font-family="Arial, sans-serif" font-size="24" text-anchor="middle" fill="white">?</text>
+
+  <!-- Card 2 (Not Flipped) -->
+  <rect x="80" y="25" width="60" height="90" rx="10" ry="10" fill="#FFEB3B"/>
+  <circle cx="110" cy="60" r="20" fill="#FFC107"/>
+
+  <!-- Card 2 Back Pattern (Flipped) -->
+  <rect x="80" y="25" width="60" height="90" rx="10" ry="10" fill="#9E9E9E"/>
+  <line x1="100" y1="45" x2="140" y2="45" stroke="white" stroke-width="5"/>
+  <line x1="100" y1="60" x2="140" y2="60" stroke="white" stroke-width="5"/>
+  <line x1="100" y1="75" x2="140" y2="75" stroke="white" stroke-width="5"/>
+</svg>

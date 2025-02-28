@@ -1,0 +1,224 @@
+* {
+    box-sizing: border-box;
+    font-weight: bold;
+}
+
+:root {
+    --green:#02CDAD;
+    --modalColor:#04272D;
+    --bgColor:#242424;
+}
+
+body {
+    margin:0;
+    width:100%;
+    height:100vh;
+    background-color:var(--bgColor);
+    overflow: hidden;
+}
+
+p {
+    margin: 0;
+}
+
+/*main styles*/
+header {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 5;
+
+    dialog {
+        width: 100%;
+        height: 110vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: black;
+
+        form {
+            height: 30%;
+            width: 40%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+            background-color: var(--modalColor);
+            color: white;
+            border-radius: 1vw;
+            border: 1px solid black;
+            box-shadow: 0 0 2px 2px grey;
+
+            .radioGroup {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                height:40%;
+            }
+        }
+    }
+}
+
+input[type="radio"] {
+    appearance: none; 
+    width: 15px; 
+    height: 15px;
+    border: 3px solid white;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+input[type="radio"]:checked {
+    border-color: var(--green);
+}
+
+input[type="radio"]:checked::before {
+    content: "";
+    width: 5px;
+    height: 5px;
+    background-color: var(--green);
+    border-radius: 50%;
+}
+
+label {
+    display: flex;
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+button {
+    border:none;
+    padding:6px 15px;
+    background-color: var(--bgColor);
+    border-radius: 0.1rem;
+    box-shadow: 0 0 2px 2px black;
+    cursor: pointer;
+    color:lightgray;
+    font-size: 16px;
+    transition: 0.2s ease-in-out;
+
+    &:hover {
+        transform: scale(1.05);
+    }
+
+    &:active {
+        background-color: rgb(53, 53, 53);
+        transition: none;
+    }
+}
+
+/*container gameboard*/
+
+main {
+    width: 100%;
+    height: 80%;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 5vh;
+    margin-top: 2vh;
+
+    >* {
+        height: 12.5%;
+        width: 70%;
+        flex:auto;
+        gap: 12px;
+        display: flex;
+
+        >* {
+            display: flex;
+            flex: auto;
+            border-radius: 10px;
+            gap: 5px;
+            box-shadow: 0 0 3px 1px black;
+            transition: 0.2s ease-in-out;
+
+            &:hover {
+                transform: scale(1.05);
+                cursor: pointer;
+            }
+
+            &:active {
+                transform: skew(15deg);
+            }
+        }
+    }
+
+}
+
+.cells {
+    background-color: var(--modalColor);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    box-shadow: inset 0 0 10px 3px rgba(0, 0, 0, 0.462);
+
+    >* {
+        width: 70%;
+        height: 70%;
+        position: absolute;
+        visibility: visible !important;
+    }
+    &::before {
+        content:"";
+        background-color: var(--green);
+        box-shadow: inset 0 0 30px 5px white;
+        width: 80%;
+        height: 80%;
+        border-radius: inherit;
+        position: absolute;
+        z-index: 1;
+    }
+
+    &::after {
+        content:"";
+        background-color: white;
+        border:2px solid black;
+        border-radius: 100px 100px 50px 50px;
+        width: 20%;
+        height: 30%;
+        z-index: 2;
+
+    }
+}
+
+.containerScore {
+    position: absolute;
+    bottom: 12px;
+    height: 6vh;
+    color:white;
+    border-radius: 12px;
+    border:2px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+footer {
+    width: 100%;
+    height: 13vh;
+    display: flex;
+    justify-content: center;
+    gap: 12vw;
+
+    >* {
+        height: 20%;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+.hidden {
+    display:none;
+}
