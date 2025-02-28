@@ -21,6 +21,7 @@ modalButton.addEventListener("click", (e) => {
         nodeListToArrayAndLoop(allCells, "addEventListener")
         placeSvg(10);
         updateScore(0, 10);
+        console.log(updateScore)
     }
 
     else if (gridSize.value === "30"){
@@ -66,7 +67,6 @@ function updateScore(score, combinations) {
         scoreboard.innerHTML += " You Won!"
     }
 }
-
 
 function shuffleArray(arrayy) {
     let array = Array.from(arrayy)
@@ -142,3 +142,5 @@ function flipCards() {
         secondCard.style.pointerEvents = "auto" 
     }
 }
+
+//update score doesnt work on small or medium
