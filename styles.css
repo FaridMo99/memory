@@ -188,20 +188,21 @@ main {
         width: 20%;
         height: 30%;
         z-index: 2;
-
     }
 }
 
 .containerScore {
-    position: absolute;
-    bottom: 12px;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
     height: 6vh;
+    width:40%;
     color:white;
     border-radius: 12px;
     border:2px solid black;
     display: flex;
     justify-content: center;
     align-items: center;
+    box-shadow: inset 0 0 33px 3px var(--green);
 
 }
 
@@ -213,7 +214,8 @@ footer {
     gap: 12vw;
 
     >* {
-        height: 20%;
+        height: 30%;
+        width: 8rem;
         justify-content: center;
         align-items: center;
     }
