@@ -33,7 +33,7 @@ header {
 
     dialog {
         width: 100%;
-        height: 110vh;
+        height: 110dvh;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -218,6 +218,22 @@ footer {
         width: 8rem;
         justify-content: center;
         align-items: center;
+    }
+}
+
+.correctFalseWinnerMessage {
+    position: absolute;
+    top:0;
+    z-index: 100;
+    width: 100vw;
+    height: 100dvh;
+    background-color: rgba(0, 0, 0, 0.426);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    >* {
+        font-size: 2rem;
     }
 }
 

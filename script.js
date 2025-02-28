@@ -19,17 +19,15 @@ modalButton.addEventListener("click", (e) => {
 
     if (gridSize.value === "20") {
         nodeListToArrayAndLoop(allCells, "addEventListener")
-        placeSvg(10);
         updateScore(0, 10);
-        console.log(updateScore)
+        placeSvg(10);
     }
 
     else if (gridSize.value === "30"){
         nodeListToArrayAndLoop(allCells, "addEventListener")
         nodeListToArrayAndLoop(rows30, "remove");
-        placeSvg(5);
         updateScore(0, 15);
-
+        placeSvg(5);
     }
 
     else if (gridSize.value === "40") {
@@ -41,6 +39,7 @@ modalButton.addEventListener("click", (e) => {
     }
 })
 
+//array functions
 function nodeListToArrayAndLoop(list, loopAction){
     let arr = Array.from(list)
 
@@ -60,13 +59,6 @@ function nodeListToArrayAndLoop(list, loopAction){
     })
 }
 
-function updateScore(score, combinations) {
-    scoreboard.innerHTML = `${score}/${combinations}`
-
-    if(score === combinations) {
-        scoreboard.innerHTML += " You Won!"
-    }
-}
 
 function shuffleArray(arrayy) {
     let array = Array.from(arrayy)
@@ -75,7 +67,6 @@ function shuffleArray(arrayy) {
         const j = Math.floor(Math.random() * (i + 1));        
         [array[i], array[j]] = [array[j], array[i]];
     }
-
     return array
 }
 
@@ -84,27 +75,33 @@ function cutAndDupedArray(lengthToCut) {
     let dupedArray = []
 
     randomizedArray.splice(0, lengthToCut);
-
     randomizedArray.forEach(item => {
-        dupedArray.push(item, item);
+        let itemAsString = item.outerHTML
+        dupedArray.push(itemAsString, itemAsString);
     });
-
     return shuffleArray(dupedArray);
 }
 
 function placeSvg(lengthToCut) {
     let shuffledDupedArray = cutAndDupedArray(lengthToCut);
-    let index = 0
+    let index = 0;
 
     allCells.forEach((cell) => {
         let svg = shuffledDupedArray[index];
-        cell.innerHTML = svg.outerHTML
-        console.log(svg)
+        cell.innerHTML = svg
         index++
     });
 
 }
 
+
+function updateScore(score, combinations) {
+    scoreboard.innerHTML = `${score}/${combinations}`
+
+    if(score === combinations) {
+        scoreboard.innerHTML += " You Won!"
+    }
+}
 
 //features 
     //if all cards right  add to score you won and firework animation
@@ -116,6 +113,7 @@ function placeSvg(lengthToCut) {
     //flipping cards
         // first card stays flipped 
         // if second card matches then both cards stay invisible
+        //message for wrong or right pair picking
         // removed and add one to points
 
 function flipCards() {
