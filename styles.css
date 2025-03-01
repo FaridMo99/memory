@@ -13,7 +13,7 @@ body {
     margin:0;
     width:100%;
     height:100dvh;
-    background-color:var(--bgColor);
+    background:linear-gradient(90deg, var(--modalColor), rgba(227, 227, 227, 0.823), var(--modalColor));
     overflow: hidden;
 }
 
@@ -197,7 +197,7 @@ main {
     margin-bottom: 5vh;
     height: 6vh;
     width:40%;
-    color:white;
+    color:var(--bgColor);
     border-radius: 12px;
     border:2px solid black;
     display: flex;
