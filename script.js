@@ -1,5 +1,6 @@
 let modal = document.querySelector("header")
 let modalButton = document.querySelector(".enterGridSizeBtn")
+let body = document.querySelector("body")
 
 let rows30 = document.querySelectorAll(".rows30")
 let rows40 = document.querySelectorAll(".rows40")
@@ -8,6 +9,8 @@ let allCells = document.querySelectorAll(".cells")
 let svgs = document.querySelectorAll("img")
 
 let scoreboard = document.querySelector(".containerScore")
+let score = 0;
+let combinations;
 
 let flipPairsMessageContainer = document.querySelector(".correctFalseWinnerMessage")
 let flipPairsMessage = document.querySelector(".message")
@@ -23,14 +26,16 @@ modalButton.addEventListener("click", (e) => {
 
     if (gridSize.value === "20") {
         nodeListToArrayAndLoop(allCells, "addEventListener")
-        updateScore(0, 10);
+        combinations = 10;
+        updateScore()
         placeSvg(10);
     }
 
     else if (gridSize.value === "30"){
         nodeListToArrayAndLoop(allCells, "addEventListener")
         nodeListToArrayAndLoop(rows30, "remove");
-        updateScore(0, 15);
+        combinations = 15;
+        updateScore()
         placeSvg(5);
     }
 
@@ -39,7 +44,8 @@ modalButton.addEventListener("click", (e) => {
         nodeListToArrayAndLoop(rows30, "remove");
         nodeListToArrayAndLoop(rows40, "remove");
         placeSvg(0);
-        updateScore(0, 20);
+        combinations = 20;
+        updateScore()
     }
 })
 
@@ -54,13 +60,21 @@ function nodeListToArrayAndLoop(list, loopAction){
 
         else if (loopAction === "addEventListener") {
             element.addEventListener("click", (e) => {
+            pairCounter++    
 
-            e.target.style.visibility = "hidden"
-            e.target.style.pointerEvents = "none"   
-            })
-        }
+            e.target.classList.add("invisible")
+            e.target.style.pointerEvents = "none"
 
-    })
+            
+            chosenMemorysArray.push(e.target)
+
+            if (pairCounter % 2 === 0) {
+                flipCards(chosenMemorysArray[chosenMemorysArray.length - 2],chosenMemorysArray[chosenMemorysArray.length - 1])
+            }
+        })
+
+    }
+})
 }
 
 
@@ -99,14 +113,16 @@ function placeSvg(lengthToCut) {
 }
 
 
-function updateScore(score, combinations) {
+function updateScore() {
     scoreboard.innerHTML = `${score}/${combinations}`
 
-    if(score === combinations && typeof(score) == "number") {
+    if(score === combinations) {
 
         scoreboard.innerHTML += " You Won!"
 
-        flipPairsMessageContainer.classList.remove("hidden")
+        setTimeout(() => {
+            flipPairsMessageContainer.classList.add("hidden")
+        }, 500)
 
         setTimeout(() => {
             flipPairsMessageContainer.classList.add("hidden")
@@ -118,66 +134,63 @@ function updateScore(score, combinations) {
 //button restart
 
 restartBtn.addEventListener("click", () => {
-    nodeListToArrayAndLoop(allCells, "addEventListener")
+    pairCounter = 0;
+    nodeListToArrayAndLoop(allCells, "addEventListener");
     nodeListToArrayAndLoop(rows30, "add");
     nodeListToArrayAndLoop(rows40, "add");
     placeSvg("");
-    updateScore("", "");
+    score = 0;
+    updateScore("");
+    chosenMemorysArray = []
     modal.classList.remove("hidden");
     Array.from(allCells).forEach(cell => {
-        cell.style.visibility = "visible"
-        cell.style.pointerEvents = "auto"
+        cell.classList.remove("invisible")
+        cell.style.pointerEvents = "auto";
     })
 })
 
+let chosenMemorysArray = [];
+let pairCounter = 0
 
-//features 
-    //if all cards right  add to score you won and firework animation
-    //restart and change grid button
-        //restart keeps grid but deletes everything else
-        //change grid deletes everything
+function flipCards(firstCard, secondCard) {
+    console.log(firstCard)
+    console.log(secondCard)
+    body.style.pointerEvents = "none"
 
-
-    //flipping cards
-        // first card stays flipped 
-        // if second card matches then both cards stay invisible
-        // removed and add one to points
-
-function flipCards() {
-    let firstCard;
-    let secondCard;
-
-    let hiddenOne = firstCard.style.visibility = "hidden"
-    let hiddenTwo = secondCard.style.visibility = "hidden"
-
-    let firstSymbol;
-    let secondSymbol;
-
-    let score = 0
-
-    if (firstCard === secondCard) {
-        flipPairsMessageContainer.classList.remove("hidden")
+    if (firstCard.innerHTML === secondCard.innerHTML) {
+        setTimeout(() => {
+            flipPairsMessageContainer.classList.remove("hidden")
+            body.style.pointerEvents = "auto"
+        }, 500)
+    
         setTimeout(() => {
             flipPairsMessageContainer.classList.add("hidden")
         }, 2000)
-        flipPairsMessage.innerHTML = "Correct <img src='svgDirectory/correct.svg'>"
+        flipPairsMessage.innerHTML = "Correct <img src='svgDirectory/right.svg'>"
+        
         score++
-        updateScore(score)
+        updateScore();
     }
 
-    else if (firstCard !== secondCard) {
-        flipPairsMessageContainer.classList.remove("hidden")
+    else if (firstCard.innerHTML !== secondCard.innerHTML) {
+        setTimeout(() => {
+            flipPairsMessageContainer.classList.remove("hidden")
+            body.style.pointerEvents = "auto"
+        }, 500)
+        
         setTimeout(() => {
             flipPairsMessageContainer.classList.add("hidden")
+            firstCard.classList.remove("invisible")
+            firstCard.style.pointerEvents = "auto"
+            secondCard.classList.remove("invisible")
+            secondCard.style.pointerEvents = "auto"
+
+            chosenMemorysArray.splice(-2);
         }, 2000)
         flipPairsMessage.innerHTML = "Wrong <img src='svgDirectory/wrong.svg'>"
     }
-
-    else if (firstSymbol !== secondSymbol && hiddenOne === hiddenTwo) {
-        firstCard.style.visibility = "visible"
-        secondCard.style.visibility = "visible"
-        firstCard.style.pointerEvents = "auto" 
-        secondCard.style.pointerEvents = "auto" 
-    }
 }
 
+
+
+//restarting then picking card bugged pair counter grows too fast
