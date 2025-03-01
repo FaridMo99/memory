@@ -9,13 +9,17 @@ let svgs = document.querySelectorAll("img")
 
 let scoreboard = document.querySelector(".containerScore")
 
+let flipPairsMessageContainer = document.querySelector(".correctFalseWinnerMessage")
+let flipPairsMessage = document.querySelector(".message")
+
+let restartBtn = document.querySelector(".restartBtn")
 //modal closing and gridSize 
 
 modalButton.addEventListener("click", (e) => {
     let gridSize = document.querySelector("input[type='radio']:checked");
    
     e.preventDefault();
-    modal.classList.toggle("hidden");
+    modal.classList.add("hidden");
 
     if (gridSize.value === "20") {
         nodeListToArrayAndLoop(allCells, "addEventListener")
@@ -44,7 +48,7 @@ function nodeListToArrayAndLoop(list, loopAction){
     let arr = Array.from(list)
 
     arr.forEach(element => {
-        if(loopAction === "remove") {
+        if(loopAction === "remove" || loopAction === "add") {
         element.classList[loopAction]('hidden');
         }
 
@@ -98,8 +102,16 @@ function placeSvg(lengthToCut) {
 function updateScore(score, combinations) {
     scoreboard.innerHTML = `${score}/${combinations}`
 
-    if(score === combinations) {
+    if(score === combinations && typeof(score) == "number") {
+
         scoreboard.innerHTML += " You Won!"
+
+        flipPairsMessageContainer.classList.remove("hidden")
+
+        setTimeout(() => {
+            flipPairsMessageContainer.classList.add("hidden")
+        }, 2000)
+        flipPairsMessage.innerHTML = "You Won!!"
     }
 }
 
@@ -113,7 +125,6 @@ function updateScore(score, combinations) {
     //flipping cards
         // first card stays flipped 
         // if second card matches then both cards stay invisible
-        //message for wrong or right pair picking
         // removed and add one to points
 
 function flipCards() {
@@ -129,8 +140,21 @@ function flipCards() {
     let score = 0
 
     if (firstCard === secondCard) {
+        flipPairsMessageContainer.classList.remove("hidden")
+        setTimeout(() => {
+            flipPairsMessageContainer.classList.add("hidden")
+        }, 2000)
+        flipPairsMessage.innerHTML = "Correct <img src='svgDirectory/correct.svg'>"
         score++
         updateScore(score)
+    }
+
+    else if (firstCard !== secondCard) {
+        flipPairsMessageContainer.classList.remove("hidden")
+        setTimeout(() => {
+            flipPairsMessageContainer.classList.add("hidden")
+        }, 2000)
+        flipPairsMessage.innerHTML = "Wrong <img src='svgDirectory/wrong.svg'>"
     }
 
     else if (firstSymbol !== secondSymbol && hiddenOne === hiddenTwo) {
@@ -141,4 +165,15 @@ function flipCards() {
     }
 }
 
-//update score doesnt work on small or medium
+
+//button restart change grid
+
+restartBtn.addEventListener("click", () => {
+    nodeListToArrayAndLoop(allCells, "addEventListener")
+    nodeListToArrayAndLoop(rows30, "add");
+    nodeListToArrayAndLoop(rows40, "add");
+    placeSvg("");
+    updateScore("", "");
+    modal.classList.remove("hidden");
+
+})
