@@ -59,24 +59,26 @@ function nodeListToArrayAndLoop(list, loopAction){
         }
 
         else if (loopAction === "addEventListener") {
-            element.addEventListener("click", (e) => {
-            pairCounter++    
-
-            e.target.classList.add("invisible")
-            e.target.style.pointerEvents = "none"
-
-            
-            chosenMemorysArray.push(e.target)
-
-            if (pairCounter % 2 === 0) {
-                flipCards(chosenMemorysArray[chosenMemorysArray.length - 2],chosenMemorysArray[chosenMemorysArray.length - 1])
-            }
-        })
+            element.addEventListener("click", namedEventListener)
 
     }
 })
 }
 
+function namedEventListener(e) {
+    pairCounter++    
+
+    e.target.classList.add("invisible")
+    e.target.style.pointerEvents = "none"
+
+    
+    chosenMemorysArray.push(e.target)
+
+    if (pairCounter % 2 === 0) {
+        flipCards(chosenMemorysArray[chosenMemorysArray.length - 2],chosenMemorysArray[chosenMemorysArray.length - 1])
+    }
+
+}
 
 function shuffleArray(arrayy) {
     let array = Array.from(arrayy)
@@ -146,6 +148,7 @@ restartBtn.addEventListener("click", () => {
     Array.from(allCells).forEach(cell => {
         cell.classList.remove("invisible")
         cell.style.pointerEvents = "auto";
+        cell.removeEventListener("click", namedEventListener);
     })
 })
 
@@ -190,7 +193,3 @@ function flipCards(firstCard, secondCard) {
         flipPairsMessage.innerHTML = "Wrong <img src='svgDirectory/wrong.svg'>"
     }
 }
-
-
-
-//restarting then picking card bugged pair counter grows too fast
