@@ -115,6 +115,22 @@ function updateScore(score, combinations) {
     }
 }
 
+//button restart
+
+restartBtn.addEventListener("click", () => {
+    nodeListToArrayAndLoop(allCells, "addEventListener")
+    nodeListToArrayAndLoop(rows30, "add");
+    nodeListToArrayAndLoop(rows40, "add");
+    placeSvg("");
+    updateScore("", "");
+    modal.classList.remove("hidden");
+    Array.from(allCells).forEach(cell => {
+        cell.style.visibility = "visible"
+        cell.style.pointerEvents = "auto"
+    })
+})
+
+
 //features 
     //if all cards right  add to score you won and firework animation
     //restart and change grid button
@@ -165,15 +181,3 @@ function flipCards() {
     }
 }
 
-
-//button restart change grid
-
-restartBtn.addEventListener("click", () => {
-    nodeListToArrayAndLoop(allCells, "addEventListener")
-    nodeListToArrayAndLoop(rows30, "add");
-    nodeListToArrayAndLoop(rows40, "add");
-    placeSvg("");
-    updateScore("", "");
-    modal.classList.remove("hidden");
-
-})
