@@ -121,15 +121,16 @@ function updateScore() {
     if(score === combinations) {
 
         scoreboard.innerHTML += " You Won!"
+        flipPairsMessage.innerHTML = "You Won!!"
 
         setTimeout(() => {
-            flipPairsMessageContainer.classList.add("hidden")
+            flipPairsMessageContainer.classList.remove("hidden")
         }, 500)
 
         setTimeout(() => {
             flipPairsMessageContainer.classList.add("hidden")
         }, 2000)
-        flipPairsMessage.innerHTML = "You Won!!"
+
     }
 }
 
